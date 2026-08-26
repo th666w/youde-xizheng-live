@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>海报二维码生成台 · 优德习正</title>
+<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+<div class="container" style="max-width:560px">
+  <div class="card">
+    <div class="brand"><div class="brand-logo">优</div><div><div class="brand-name">优德习正 · 习惯教育</div><div class="brand-sub">海报二维码生成台</div></div></div>
+    <h2 style="font-size:20px;margin:10px 0 4px">生成测评海报二维码</h2>
+    <p class="muted" style="margin-bottom:14px">家长扫码即进入免费习惯测评，提交后机构后台（/admin.html）实时收到线索并自动出方案。</p>
+    <div id="qrBox" style="display:flex;justify-content:center;padding:12px"></div>
+    <div id="qrUrl" class="muted text-center" style="font-size:12px;word-break:break-all"></div>
+    <div class="footer">提示：本页会自动指向当前站点的 index.html。把二维码打印/投屏即可。后台地址：本站点下的 <b>/admin.html</b></div>
+  </div>
+</div>
+<script src="./js/qrcode.min.js"></script>
+<script src="./js/gen2.js"></script>
+</body>
+</html>
