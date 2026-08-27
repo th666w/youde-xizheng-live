@@ -9,7 +9,7 @@ window.UDXZ_CONFIG = {
   institution: "优德习正 · 习惯教育",
   slogan: "免费习惯测评 · 扫码即测",
   // 显示在成功页与生成台的机构联系方式（微信/电话均可）
-  contactText: "咨询微信：请替换为你的微信号",
+  contactText: "咨询微信：17628422695",
   // 腾讯云 CloudBase「HTTP 访问服务」绑定的默认域名
   // 形如 https://youde-xizheng-live-d9cr621ed869a.<region>.app.tcloudbase.com
   cloudbaseHttp: "https://youde-xizheng-live-d9cr621ed869a-1429754614.ap-shanghai.app.tcloudbase.com",
