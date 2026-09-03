@@ -79,7 +79,7 @@
               <select id="f_grade" class="form-input"><option value="">请选择</option><option>小学1-2年级</option><option>小学3-4年级</option><option>小学5-6年级</option><option>初一</option><option>初二</option><option>初三</option><option>高中</option></select>
             </label></div>
             <div class="form-group"><label>最想改善
-              <select id="f_improve" class="form-input"><option value="">请选择</option><option>拖拉磨蹭</option><option>专注力不足</option><option>自主学习弱</option><option>亲子沟通紧张</option><option>其他</option></select>
+              <select id="f_improve" class="form-input"><option value="">请选择</option><option>内动力</option><option>思维模式·思考</option><option>规则意识</option><option>自驱方式</option><option>兴趣与奖励</option><option>自我意识</option><option>性格与动手</option><option>家庭联结</option><option>理解·记忆·听课</option><option>数学状态</option><option>其他</option></select>
             </label></div>
           </div>
           <div class="form-group"><label>学校/班级<input id="f_school" class="form-input" placeholder="选填"></label></div>
