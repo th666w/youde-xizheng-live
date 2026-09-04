@@ -116,20 +116,28 @@
     const dim = T.dims.find((d) => d.id === item.dim);
     const chosen = state.answers[i];
     const pct = Math.round(((i) / total) * 100);
+    const hint = i === 0
+      ? `<div class="lead-banner lead-banner-ok" style="margin-bottom:14px">下面 10 个小问题，没有对错，按你真实的想法选就好 😊</div>`
+      : "";
     app.innerHTML = `
       <div class="container" style="max-width:720px">
+        ${hint}
         <div class="quiz-header">
           <div class="progress-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
-          <div class="progress-text"><span>第 ${i + 1} / ${total} 题</span><span>${esc(dim.icon)} ${esc(dim.name)}</span></div>
+          <div class="progress-text"><span>第 ${i + 1} / ${total} 题</span><span>${esc(item.tag)}</span></div>
         </div>
         <div class="quiz-card card">
-          <span class="q-dimension">${esc(dim.icon)} ${esc(dim.name)}</span>
-          <div class="q-text">${esc(item.q)}？</div>
+          <span class="q-dimension">${esc(item.tag)}</span>
+          <div class="q-text">${esc(item.q)}</div>
           <div class="q-options" id="opts">
-            ${T.options
+            ${item.opts
               .map(
                 (o) => `<button class="q-option ${chosen === o.v ? "selected" : ""}" data-v="${o.v}">
-                  <div class="opt-top"><span class="opt-label">${o.label}</span><span class="opt-check">${chosen === o.v ? "✓" : ""}</span></div>
+                  <div class="opt-top">
+                    <span class="opt-label">${esc(o.label)}</span>
+                    <span class="opt-check">${chosen === o.v ? "✓" : ""}</span>
+                  </div>
+                  ${o.desc ? `<div class="opt-desc">${esc(o.desc)}</div>` : ""}
                 </button>`
               )
               .join("")}
