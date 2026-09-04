@@ -130,17 +130,31 @@ window.UDXZ_SOLUTION_LIVE = (function () {
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
+  // 旧版（4 维度）遗留数据映射：让老线索也能出针对性方案，而不是回退成全量罗列
+  var LEGACY = {
+    "拖拉磨蹭": "drive",
+    "专注力": "drive",
+    "自主学习": "drive",
+    "亲子沟通": "family",
+  };
+
   function matchKeys(weak) {
-    return (weak || []).map(function (w) {
-      if (ADVICE[w]) return w;
-      for (var k in ADVICE) {
-        var t = ADVICE[k].title;
-        if (t === w) return k;
-        if (t.indexOf(w) >= 0) return k;   // 标题包含弱项词
-        if (w.indexOf(t) >= 0) return k;   // 弱项词包含标题
+    var out = [];
+    (weak || []).forEach(function (w) {
+      var k = null;
+      if (ADVICE[w]) k = w;
+      if (!k && LEGACY[w]) k = LEGACY[w];
+      if (!k) {
+        for (var d in ADVICE) {
+          var t = ADVICE[d].title;
+          if (t === w) { k = d; break; }
+          if (t.indexOf(w) >= 0) { k = d; break; }   // 标题包含弱项词
+          if (w.indexOf(t) >= 0) { k = d; break; }   // 弱项词包含标题
+        }
       }
-      return null;
-    }).filter(Boolean);
+      if (k && out.indexOf(k) < 0) out.push(k);      // 去重
+    });
+    return out;
   }
 
   function build(lead) {
