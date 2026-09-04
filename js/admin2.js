@@ -26,6 +26,36 @@
   $("#refreshBtn").addEventListener("click", loadLeads);
   $("#closeBtn").addEventListener("click", function () { $("#modal").classList.remove("show"); });
   $("#printBtn").addEventListener("click", function () { window.print(); });
+  $("#clearBtn").addEventListener("click", clearAll);
+
+  // 清空全部线索：二次确认 + 输密码，防误触
+  function clearAll() {
+    if (!cbHttp || !adminPwd) { alert("请先在上方配置云函数地址与管理密码"); return; }
+    if (!confirm("确定清空全部线索吗？\n\n此操作不可恢复，云端所有家长提交记录都会被删除。\n建议先刷新确认列表内容。")) return;
+    var tip = prompt("请输入后台管理密码以确认清空：");
+    if (tip === null) return;
+    if (tip.trim() !== adminPwd) { alert("密码不一致，已取消清空。"); return; }
+
+    var btn = $("#clearBtn");
+    var old = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = "清空中…";
+    // 用 GET 带 clear=1 触发清空（GET 是简单请求，不会被网关预检拦截；云函数同时支持 DELETE 方法）
+    fetch(cbHttp + "/?pwd=" + encodeURIComponent(adminPwd) + "&clear=1", { cache: "no-store" })
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+      .then(function (res) {
+        btn.disabled = false;
+        btn.textContent = old;
+        if (!res.ok || !res.d.success) throw new Error((res.d && res.d.error) || "清空失败");
+        alert("已清空，共删除 " + (res.d.cleared || 0) + " 条线索。");
+        loadLeads();
+      })
+      .catch(function (e) {
+        btn.disabled = false;
+        btn.textContent = old;
+        alert("清空失败：" + (e.message || e) + "\n\n若提示方法不允许，说明云函数尚未更新到支持清空的版本，需要先重新部署云函数。");
+      });
+  }
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
